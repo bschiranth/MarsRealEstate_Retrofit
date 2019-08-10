@@ -36,10 +36,10 @@ class OverviewViewModel : ViewModel() {
     val status: LiveData<String>
         get() = _status
 
-    private val _property = MutableLiveData<MarsProperty>()
+    private val _properties = MutableLiveData<List<MarsProperty>>()
 
-    val property: LiveData<MarsProperty>
-        get() = _property
+    val properties: LiveData<List<MarsProperty>>
+        get() = _properties
 
 
     private val job = Job()
@@ -64,9 +64,7 @@ class OverviewViewModel : ViewModel() {
             try {
                 val result = deferred.await()
                 _status.value = "Result size is ${result.size}"
-                if(result.isNotEmpty()) {
-                   _property.value = result[0]
-                }
+                _properties.value = result
             } catch (e: Exception) {
                 _status.value = "Failure: ${e.message}"
             }
