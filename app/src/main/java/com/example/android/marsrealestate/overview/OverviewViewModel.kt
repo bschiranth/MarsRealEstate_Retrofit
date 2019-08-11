@@ -45,6 +45,11 @@ class OverviewViewModel : ViewModel() {
         get() = _properties
 
 
+    private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
+
+    val navigateToSelectedProperty: LiveData<MarsProperty>
+        get() = _navigateToSelectedProperty
+
     private val job = Job()
     private val mainScope = CoroutineScope(job + Dispatchers.Main)
 
@@ -75,6 +80,14 @@ class OverviewViewModel : ViewModel() {
             }
         }
 
+    }
+
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        _navigateToSelectedProperty.value = marsProperty
+    }
+
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
     }
 
     override fun onCleared() {
